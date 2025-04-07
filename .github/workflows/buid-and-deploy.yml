@@ -21,7 +21,6 @@ jobs:
 
       - name: Install Frontend Dependencies and Build
         run: |
-          cd frontend
           npm install -g @angular/cli
           npm install
           ng build --configuration production
@@ -43,8 +42,7 @@ jobs:
           dotnet build ./BasicCalculatorApi/BasicCalculatorApi.csproj --configuration Release --no-restore
           dotnet build ./AdvancedCalculatorApi/AdvancedCalculatorApi.csproj --configuration Release --no-restore
 
-      # Publish Backend APIs 
-      - name: Publish Backend
+      - name: Publish Backend APIs
         run: |
           dotnet publish ./BasicCalculatorApi/BasicCalculatorApi.csproj --configuration Release --output ./publish/basic
           dotnet publish ./AdvancedCalculatorApi/AdvancedCalculatorApi.csproj --configuration Release --output ./publish/advanced
@@ -66,6 +64,8 @@ jobs:
           slot-name: production
           publish-profile: ${{ secrets.AZURE_WEBAPP_BASIC_API_PROFILE }}
           package: ./publish/basic
+        env:
+          ConnectionStrings__DbConnection: ${{ secrets.PG_CONN }}
 
       # Deploy Advanced Calculator API 
       - name: Deploy AdvancedCalculatorApi to Azure
@@ -75,3 +75,5 @@ jobs:
           slot-name: production
           publish-profile: ${{ secrets.AZURE_WEBAPP_ADVANCED_API_PROFILE }}
           package: ./publish/advanced
+        env:
+          ConnectionStrings__DbConnection: ${{ secrets.PG_CONN }}
