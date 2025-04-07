@@ -1,0 +1,18 @@
+﻿services:
+  basiccalculatorapi:
+    image: basiccalculatorapi
+    build:
+      context: .
+      dockerfile: BasicCalculatorApi/Dockerfile
+
+  shared:
+    image: shared
+    build:
+      context: .
+      dockerfile: Shared/Dockerfile
+
+  advancedcalculatorapi:
+    image: advancedcalculatorapi
+    build:
+      context: .
+      dockerfile: AdvancedCalculatorApi/Dockerfile
