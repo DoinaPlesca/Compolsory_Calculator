@@ -1,0 +1,77 @@
+name: Build and Deploy Calculator App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: Install Frontend Dependencies and Build
+        run: |
+          cd frontend
+          npm install -g @angular/cli
+          npm install
+          ng build --configuration production
+        working-directory: ./frontend
+
+      # Setup .NET Core SDK
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore Backend Dependencies
+        run: |
+          dotnet restore ./BasicCalculatorApi/BasicCalculatorApi.csproj
+          dotnet restore ./AdvancedCalculatorApi/AdvancedCalculatorApi.csproj
+
+      - name: Build Backend APIs
+        run: |
+          dotnet build ./BasicCalculatorApi/BasicCalculatorApi.csproj --configuration Release --no-restore
+          dotnet build ./AdvancedCalculatorApi/AdvancedCalculatorApi.csproj --configuration Release --no-restore
+
+      # Publish Backend APIs 
+      - name: Publish Backend
+        run: |
+          dotnet publish ./BasicCalculatorApi/BasicCalculatorApi.csproj --configuration Release --output ./publish/basic
+          dotnet publish ./AdvancedCalculatorApi/AdvancedCalculatorApi.csproj --configuration Release --output ./publish/advanced
+
+      # Deploy Frontend
+      - name: Deploy Frontend to Azure
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: AZURE_FRONTEND_APP_NAME
+          slot-name: production
+          publish-profile: ${{ secrets.AZURE_WEBAPP_FRONTEND_PROFILE }}
+          package: ./frontend/dist/web-ui
+
+      # Deploy Basic Calculator API
+      - name: Deploy BasicCalculatorApi to Azure
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: AZURE_BASIC_API_APP_NAME
+          slot-name: production
+          publish-profile: ${{ secrets.AZURE_WEBAPP_BASIC_API_PROFILE }}
+          package: ./publish/basic
+
+      # Deploy Advanced Calculator API 
+      - name: Deploy AdvancedCalculatorApi to Azure
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: AZURE_ADVANCED_API_APP_NAME
+          slot-name: production
+          publish-profile: ${{ secrets.AZURE_WEBAPP_ADVANCED_API_PROFILE }}
+          package: ./publish/advanced
