@@ -1,4 +1,4 @@
-# 📘 Calculator App – Full Stack Microservices Project
+#  Calculator App – Full Stack Microservices Project
 
 ##  Project Overview
 
@@ -104,3 +104,85 @@ BasicCalculatorApi (Azure Web App)
 AdvancedCalculatorApi (Azure Web App)
     ↓
 PostgreSQL Database (Azure PostgreSQL)
+
+```
+
+
+
+# **Frontend - Calculator Web App (Angular)**
+
+The frontend of this project is built using the latest **Angular 17** framework.
+
+It provides a modern, responsive, and user-friendly **Single-Page Application (SPA)** that connects to the backend APIs for real-time calculations and history management.
+
+---
+
+## Main Features:
+- Modern Calculator UI with a clean and dark-themed design
+- Support for Basic Operations (+, -, *, /)
+- Support for Advanced Operations (√, %, ^, +/-)
+- Auto-switch between Basic and Advanced backend services based on the user’s calculation
+- History Display: View the latest 10 calculations
+- Fullscreen Mode toggle
+- Dynamic Feature Toggle: History saving and loading controlled by backend feature flags
+- Smart Expression Handling: Automatically transforms expressions for backend compatibility (e.g., % ➔ /100*)
+
+---
+
+## Technologies Used:
+| Technology | Purpose |
+|:---|:---|
+| Angular 17 | Frontend framework |
+| RxJS | Manage async API calls |
+| Angular Forms | Bind input and form controls |
+| Standalone Components | Lightweight modular structure |
+| Nginx | Serve the Angular app in production |
+
+---
+
+## Deployment:
+- Built using **Docker** and served via **Nginx** inside the frontend container.
+- Configured to proxy API requests:
+  - `/basicCalculator/` ➔ Basic Calculator Backend
+  - `/advancedCalculator/` ➔ Advanced Calculator Backend
+- Optimized with:
+  - Gzip compression for faster loading
+  - Static files caching for better performance
+  - Cross-Origin Resource Sharing (CORS) support
+
+---
+
+## Folder Structure:
+```bash
+frontend/
+├── src/
+│   ├── app/
+│   │   ├── components/
+│   │   │   └── calculator/      # Main Calculator UI component
+│   │   ├── services/
+│   │   │   ├── basic-calculator.service.ts
+│   │   │   └── advanced-calculator.service.ts
+│   ├── assets/                  # Images, icons, etc.
+├── nginx.conf                    # Custom Nginx configuration
+├── Dockerfile                    # Build Angular frontend and serve with Nginx
+├── package.json                  # Project dependencies
+```
+
+---
+
+## UI Highlights:
+- Dark mode by default
+- Responsive design (works well on mobile and desktop)
+- Clear / History / Fullscreen top buttons for better UX
+- Big display area showing current expression and result
+- Friendly errors for invalid expressions or server errors
+
+---
+
+## How Frontend Talks to Backend:
+- Angular app sends requests directly to **Nginx**
+- Nginx proxies API calls to the correct backend microservice
+
+This architecture **separates UI from API** securely and cleanly.
+
+---
