@@ -63,8 +63,8 @@ namespace BasicCalculatorApi.Controllers
             return expression.Contains("^") ||
                    expression.Contains("sqrt") ||
                    expression.Contains("%") ||
-                   expression.Contains("(") ||
-                   expression.Contains(")");
+                   expression.Contains("()") ||
+                   expression.Contains("+/-");
         }
     }
 }

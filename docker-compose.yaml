@@ -48,8 +48,11 @@
       environment:
         - ASPNETCORE_ENVIRONMENT=Production
         - ConnectionStrings__DbConnection=Host=postgres_db;Port=5432;Database=calculator_db;Username=postgres;Password=password
+        - ASPNETCORE_URLS=http://0.0.0.0:80
+      ports:
+        - "5001:80"
       deploy:
-        replicas: 3
+        replicas: 1
         restart_policy:
           condition: on-failure
       networks:

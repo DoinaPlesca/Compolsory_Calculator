@@ -19,7 +19,7 @@
     <div class="top-buttons">
         <button (click)="loadHistory()">🕒</button>
         <button (click)="toggleFullscreen()">⛶</button>
-        <button class="clear-button" (click)="clear()">⌫</button>
+        <button class="clear-button" (click)="backspace()">⌫</button>
     </div>
 
     <!-- Divider Line -->
@@ -28,7 +28,7 @@
     <!-- Calculator Buttons -->
     <div class="buttons">
         <button class="function" (click)="clear()">C</button>
-        <button class="function" (click)="append('()')">()</button>
+        <button class="function" (click)="append('^')">xʸ</button>
         <button class="function" (click)="append('%')">%</button>
         <button class="operator" (click)="append('/')">÷</button>
        
@@ -48,7 +48,7 @@
         <button (click)="append('3')">3</button>
         <button class="operator" (click)="append('+')">+</button>
 
-        <button (click)="append('+/-')">+/-</button>
+        <button (click)="toggleSign()">±</button>
         <button (click)="append('0')">0</button>
         <button (click)="append(',')">,</button>
         <button class="equal" (click)="calculate()">=</button>

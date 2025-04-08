@@ -2,19 +2,24 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+export interface CalculationHistoryItem {
+  id: number;
+  expression: string;
+  result: number;
+  timestamp: string;
+}
 @Injectable({
   providedIn: 'root'
 })
 export class AdvancedCalculatorService {
-  private apiUrl = 'https://localhost:5155/advancedCalculator'; // replace with azurre after deployment
-
+  private apiUrl = 'http://localhost:5001/advancedCalculator'; // replace with azurre after deployment ///private apiUrl = 'https://azure-url/AdvancedCalculator';
+  
   constructor(private http: HttpClient) { }
 
-  calculate(expression: string): Observable<any> {
-    return this.http.post(this.apiUrl, { expression });
+  calculate(expression: string): Observable<{ result: number }> {
+    return this.http.post<{ result: number }>(this.apiUrl, { expression });
   }
-
-  getHistory(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/history`);
+  getHistory(): Observable<CalculationHistoryItem[]> {
+    return this.http.get<CalculationHistoryItem[]>(`${this.apiUrl}/history`);
   }
 }
