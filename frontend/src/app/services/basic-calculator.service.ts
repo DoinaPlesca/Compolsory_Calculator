@@ -21,7 +21,8 @@ export interface CalculationHistoryItem {
   providedIn: 'root'
 })
 export class BasicCalculatorService {
-  private apiUrl = 'http://localhost:5000/calculator';
+  private apiUrl = '/basicCalculator/calculator';
+  // private apiUrl = 'http://localhost:5000/calculator';
 
   constructor(private http: HttpClient) {}
   

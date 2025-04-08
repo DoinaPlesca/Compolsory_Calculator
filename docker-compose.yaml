@@ -16,6 +16,20 @@
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
       retries: 5
+      
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    restart: unless-stopped
+    networks:
+      - app-network
+    depends_on:
+      - basic_calculator_api
+      - advanced_calculator_api
+    ports:
+      - "3001:80"
+  
   
   
   basic_calculator_api:
@@ -29,10 +43,8 @@
       - ASPNETCORE_ENVIRONMENT=Production
       - ConnectionStrings__DbConnection=Host=postgres_db;Port=5432;Database=calculator_db;Username=postgres;Password=password
       - ASPNETCORE_URLS=http://0.0.0.0:80
-    ports:
-      - "5000:80"
     deploy:
-      replicas: 1
+      replicas: 3
       restart_policy:
         condition: on-failure
     networks:
@@ -49,10 +61,8 @@
         - ASPNETCORE_ENVIRONMENT=Production
         - ConnectionStrings__DbConnection=Host=postgres_db;Port=5432;Database=calculator_db;Username=postgres;Password=password
         - ASPNETCORE_URLS=http://0.0.0.0:80
-      ports:
-        - "5001:80"
       deploy:
-        replicas: 1
+        replicas: 3
         restart_policy:
           condition: on-failure
       networks:

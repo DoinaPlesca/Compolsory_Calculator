@@ -12,8 +12,9 @@ export interface CalculationHistoryItem {
   providedIn: 'root'
 })
 export class AdvancedCalculatorService {
-  private apiUrl = 'http://localhost:5001/advancedCalculator'; // replace with azurre after deployment ///private apiUrl = 'https://azure-url/AdvancedCalculator';
-  
+  // replace with azurre after deployment ///private apiUrl = 'https://azure-url/AdvancedCalculator';
+  private apiUrl = '/advancedCalculator/advancedCalculator';
+
   constructor(private http: HttpClient) { }
 
   calculate(expression: string): Observable<{ result: number }> {
