@@ -83,20 +83,20 @@ jobs:
         uses: azure/cli@v2
         with:
           inlineScript: |
-            az webapp deployment slot swap --name AZURE_FRONTEND_APP_NAME --resource-group YOUR_RESOURCE_GROUP --slot staging
+            az webapp deployment slot swap --name AZURE_FRONTEND_APP_NAME --resource-group RESOURCE_GROUP --slot staging
             
       # Swap Basic API Staging to Production
       - name: Swap Basic API Staging to Production
         uses: azure/cli@v2
         with:
           inlineScript: |
-            az webapp deployment slot swap --name AZURE_BASIC_API_APP_NAME --resource-group YOUR_RESOURCE_GROUP --slot staging
+            az webapp deployment slot swap --name AZURE_BASIC_API_APP_NAME --resource-group RESOURCE_GROUP --slot staging
             
       # Swap Advanced API Staging to Production
       - name: Swap Advanced API Staging to Production
         uses: azure/cli@v2
         with:
           inlineScript: |
-            az webapp deployment slot swap --name AZURE_ADVANCED_API_APP_NAME --resource-group YOUR_RESOURCE_GROUP --slot staging
+            az webapp deployment slot swap --name AZURE_ADVANCED_API_APP_NAME --resource-group RESOURCE_GROUP --slot staging
 
 
