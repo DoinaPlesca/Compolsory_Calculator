@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { BasicCalculatorService } from '../../services/basic-calculator.service';
+import { BasicCalculatorService, CalculationHistoryItem } from '../../services/basic-calculator.service';
 
 
 @Component({
@@ -15,33 +15,55 @@ export class CalculatorComponent {
   expression = '';
   result: number | null = null;
   isDark = true;
-  private calcService = inject(BasicCalculatorService);
+  history: CalculationHistoryItem[] = [];
+  showHistory = false;
+  constructor(private calculatorService: BasicCalculatorService) {}
 
-  append(val: string) {
-    this.expression += val;
+  append(value: string) {
+    if (this.showHistory) {
+      this.clearHistoryView();
+    }
+    this.expression += value;
   }
 
   clear() {
     this.expression = '';
     this.result = null;
+    this.clearHistoryView(); 
   }
 
+  // calculate the current expression
   calculate() {
-    if (!this.expression) return;
-    this.calcService.calculate(this.expression).subscribe({
-      next: res => this.result = res.result,
-      error: () => this.result = NaN
+    if (!this.expression.trim()) return;
+
+    this.calculatorService.calculate(this.expression).subscribe({
+      next: (response) => {
+        this.result = response.result;
+      },
+      error: (error) => {
+        console.error(error);
+        alert('Invalid expression or server error!');
+      }
+    });
+  }
+  
+
+  // load calculation history
+  loadHistory() {
+    this.calculatorService.getHistory().subscribe({
+      next: (data) => {
+        this.history = data.slice(0,8);
+        this.showHistory = true;
+      },
+      error: (err) => {
+        console.error(err);
+      }
     });
   }
 
-  toggleTheme() {
-    this.isDark = !this.isDark;
-    document.body.classList.toggle('dark-theme', this.isDark);
-    document.body.classList.toggle('light-theme', !this.isDark);
-  }
 
-  openHistory() {
-    alert('History feature coming soon!'); 
+  clearHistoryView() {
+    this.showHistory = false;
   }
 
   toggleFullscreen() {
@@ -50,9 +72,5 @@ export class CalculatorComponent {
     } else {
       document.exitFullscreen();
     }
-  }
-
-  closeApp() {
-    alert('Close feature is disabled in browsers.');
   }
 }

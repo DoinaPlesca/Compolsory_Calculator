@@ -1,16 +1,25 @@
 <div class="calculator">
 
-    <!-- Display -->
     <div class="display">
-        <div class="expression">{{ expression || '0' }}</div>
-        <div class="result">{{ result !== null ? result : '' }}</div>
+        <ng-container *ngIf="showHistory; else normalDisplay">
+            <div class="history-list">
+                <div *ngFor="let item of history">
+                    {{ item.expression }} = {{ item.result }}
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-template #normalDisplay>
+            <div class="expression">{{ expression || '0' }}</div>
+            <div class="result">{{ result !== null ? result : '' }}</div>
+        </ng-template>
     </div>
 
     <!-- Top Buttons -->
     <div class="top-buttons">
-        <button (click)="openHistory()">🕒</button>
+        <button (click)="loadHistory()">🕒</button>
         <button (click)="toggleFullscreen()">⛶</button>
-        
+        <button class="clear-button" (click)="clear()">⌫</button>
     </div>
 
     <!-- Divider Line -->

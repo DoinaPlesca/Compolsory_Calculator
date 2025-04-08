@@ -44,8 +44,9 @@
 /* Top Buttons */
 .top-buttons {
     display: flex;
-    justify-content: flex-start; 
-    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 63px;
     margin-bottom: -20px;
 }
 
@@ -62,6 +63,12 @@
 
 .top-buttons button:hover {
     background-color: #333;
+}
+
+.top-buttons .clear-button {
+    color: white;
+    font-size: 1.8rem;
+    padding: 8px 14px;
 }
 
 .divider {
