@@ -1,0 +1,48 @@
+<div class="calculator">
+
+    <!-- Display -->
+    <div class="display">
+        <div class="expression">{{ expression || '0' }}</div>
+        <div class="result">{{ result !== null ? result : '' }}</div>
+    </div>
+
+    <!-- Top Buttons -->
+    <div class="top-buttons">
+        <button (click)="openHistory()">🕒</button>
+        <button (click)="toggleFullscreen()">⛶</button>
+        
+    </div>
+
+    <!-- Divider Line -->
+    <div class="divider"></div>
+
+    <!-- Calculator Buttons -->
+    <div class="buttons">
+        <button class="function" (click)="clear()">C</button>
+        <button class="function" (click)="append('()')">()</button>
+        <button class="function" (click)="append('%')">%</button>
+        <button class="operator" (click)="append('/')">÷</button>
+       
+
+        <button (click)="append('7')">7</button>
+        <button (click)="append('8')">8</button>
+        <button (click)="append('9')">9</button>
+        <button class="operator" (click)="append('*')">×</button>
+
+        <button (click)="append('4')">4</button>
+        <button (click)="append('5')">5</button>
+        <button (click)="append('6')">6</button>
+        <button class="operator" (click)="append('-')">−</button>
+
+        <button (click)="append('1')">1</button>
+        <button (click)="append('2')">2</button>
+        <button (click)="append('3')">3</button>
+        <button class="operator" (click)="append('+')">+</button>
+
+        <button (click)="append('+/-')">+/-</button>
+        <button (click)="append('0')">0</button>
+        <button (click)="append(',')">,</button>
+        <button class="equal" (click)="calculate()">=</button>
+    </div>
+
+</div>

@@ -54,7 +54,7 @@ jobs:
           app-name: AZURE_FRONTEND_APP_NAME
           slot-name: production
           publish-profile: ${{ secrets.AZURE_WEBAPP_FRONTEND_PROFILE }}
-          package: ./frontend/dist/web-ui
+          package: ./frontend/dist/frontend
 
       # Deploy Basic Calculator API
       - name: Deploy BasicCalculatorApi to Azure

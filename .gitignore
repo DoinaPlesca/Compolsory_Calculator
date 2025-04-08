@@ -1,2 +1,38 @@
 bin
 obj
+
+
+# Node modules
+node_modules/
+
+# Build output
+dist/
+out-tsc/
+
+
+src/environments/environment.prod.ts
+src/environments/environment.ts
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE settings
+.idea/
+.vscode/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary folders
+tmp/
+temp/
+
+ 
+package-lock.json
+yarn.lock
+
+# Angular cache
+.angular/cache/
