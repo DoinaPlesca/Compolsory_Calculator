@@ -36,3 +36,6 @@ yarn.lock
 
 # Angular cache
 .angular/cache/
+/.vs/Compulsory_Calculator/CopilotIndices/17.13.444.19527
+/.gitignore
+/.vs/Compulsory_Calculator
