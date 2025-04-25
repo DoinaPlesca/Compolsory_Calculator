@@ -1,6 +1,4 @@
 # Azure Pipelines
-# Build and deploy a full-stack calculator application with Angular frontend and .NET backend APIs.
-
 trigger:
 - main
 
@@ -125,3 +123,4 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: |
       az webapp deployment slot swap --name "$(AZURE_ADVANCED_API_APP_NAME)" --resource-group "$(RESOURCE_GROUP)" --slot staging
+
