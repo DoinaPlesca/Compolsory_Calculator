@@ -75,25 +75,6 @@ jobs:
         env:
           ConnectionStrings__DbConnection: ${{ secrets.PG_CONN }}
       
-      #  Swap Staging Slot to Production for Frontend
-      - name: Swap Frontend Staging to Production
-        uses: azure/cli@v2
-        with:
-          inlineScript: |
-            az webapp deployment slot swap --name calculator-frontend-dls --resource-group dls --slot staging
-      
-      # Swap Basic API Staging to Production
-      - name: Swap Basic API Staging to Production
-        uses: azure/cli@v2
-        with:
-          inlineScript: |
-            az webapp deployment slot swap --name calculator-basic-api-dls --resource-group dls --slot staging
-      
-      # Swap Advanced API Staging to Production
-      - name: Swap Advanced API Staging to Production
-        uses: azure/cli@v2
-        with:
-          inlineScript: |
-            az webapp deployment slot swap --name calculator-advanced-api-dls --resource-group dls2 --slot staging
+
 
 
