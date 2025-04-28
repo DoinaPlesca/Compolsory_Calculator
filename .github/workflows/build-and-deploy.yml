@@ -52,7 +52,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: calculator-frontend-dls
-          slot-name: staging
           publish-profile: ${{ secrets.AZURE_WEBAPP_FRONTEND_PROFILE }}
           package: ./frontend/dist/frontend
 
@@ -61,7 +60,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: calculator-basic-api-dls
-          slot-name: staging
           publish-profile: ${{ secrets.AZURE_WEBAPP_BASIC_API_PROFILE }}
           package: ./publish/basic
         env:
@@ -72,7 +70,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: calculator-advanced-api-dls
-          slot-name: staging
           publish-profile: ${{ secrets.AZURE_WEBAPP_ADVANCED_API_PROFILE }}
           package: ./publish/advanced
         env:
