@@ -1,4 +1,5 @@
 name: Build and Deploy Calculator App
+
 on:
   push:
     branches:
@@ -50,7 +51,7 @@ jobs:
       - name: Deploy Frontend to Azure Staging Slot
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{ secrets.AZURE_FRONTEND_APP_NAME }}
+          app-name: calculator-frontend-dls
           slot-name: staging
           publish-profile: ${{ secrets.AZURE_WEBAPP_FRONTEND_PROFILE }}
           package: ./frontend/dist/frontend
@@ -59,41 +60,43 @@ jobs:
       - name: Deploy BasicCalculatorApi to Azure Staging Slot
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{ secrets.AZURE_BASIC_API_APP_NAME }}
+          app-name: calculator-basic-api-dls
           slot-name: staging
           publish-profile: ${{ secrets.AZURE_WEBAPP_BASIC_API_PROFILE }}
           package: ./publish/basic
         env:
           ConnectionStrings__DbConnection: ${{ secrets.PG_CONN }}
 
-      # Deploy Advanced Calculator API
+      # Deploy Advanced Calculator API 
       - name: Deploy AdvancedCalculatorApi to Azure Staging Slot
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{ secrets.AZURE_ADVANCED_API_APP_NAME }}
+          app-name: calculator-advanced-api-dls
           slot-name: staging
           publish-profile: ${{ secrets.AZURE_WEBAPP_ADVANCED_API_PROFILE }}
           package: ./publish/advanced
         env:
           ConnectionStrings__DbConnection: ${{ secrets.PG_CONN }}
-
+      
       #  Swap Staging Slot to Production for Frontend
       - name: Swap Frontend Staging to Production
         uses: azure/cli@v2
         with:
           inlineScript: |
-            az webapp deployment slot swap --name ${{ secrets.AZURE_FRONTEND_APP_NAME }} --resource-group ${{ secrets.RESOURCE_GROUP }} --slot staging
-
+            az webapp deployment slot swap --name calculator-frontend-dls --resource-group dls --slot staging
+      
       # Swap Basic API Staging to Production
       - name: Swap Basic API Staging to Production
         uses: azure/cli@v2
         with:
           inlineScript: |
-            az webapp deployment slot swap --name ${{ secrets.AZURE_BASIC_API_APP_NAME }} --resource-group ${{ secrets.RESOURCE_GROUP }} --slot staging
-
+            az webapp deployment slot swap --name calculator-basic-api-dls --resource-group dls --slot staging
+      
       # Swap Advanced API Staging to Production
       - name: Swap Advanced API Staging to Production
         uses: azure/cli@v2
         with:
           inlineScript: |
-            az webapp deployment slot swap --name ${{ secrets.AZURE_ADVANCED_API_APP_NAME }} --resource-group ${{ secrets.RESOURCE_GROUP }} --slot staging
+            az webapp deployment slot swap --name calculator-advanced-api-dls --resource-group dls2 --slot staging
+
+
